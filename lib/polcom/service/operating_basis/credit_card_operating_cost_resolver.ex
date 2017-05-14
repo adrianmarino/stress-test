@@ -6,7 +6,7 @@ alias Polcom.PolicyToCreditCardOperatinfCostConverter
 defmodule Polcom.CreditCardOperatingCostResolver do
 
   def find_test_print, do: IO.puts(Core.JSON.to_pretty_json(find_test()))
-  def find_test_profiler, do: Core.Profiler.time(find_test())
+  def find_test_profiler, do: Core.Profiler.time(fn-> find_test() end)
   def find_test_time, do: to_string(find_test_profiler())
 
   def find_test do
