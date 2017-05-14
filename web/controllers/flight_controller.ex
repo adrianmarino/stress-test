@@ -1,6 +1,7 @@
 alias Polcom.Flight
 alias Polcom.Metadata
 alias Polcom.CreditCardOperatingCostResolver
+alias Core.Profiler
 
 defmodule Polcom.FlightController do
   use Polcom.Web, :controller
@@ -11,9 +12,14 @@ defmodule Polcom.FlightController do
                             departure: "2016-11-16", returning: "2016-11-23")
     metadata = Metadata.create(site: "ARG", brand: "ALMUNDO", channel: "WEB")
 
-    case CreditCardOperatingCostResolver.find(flight: flight, metadata: metadata) do
+    result =  Profiler.time(fn->
+      CreditCardOperatingCostResolver.find(flight: flight, metadata: metadata)
+    end)
+    IO.puts("...process time: #{result.time}")
+
+    case result.return do
       [] -> send_error_resp(conn, 400, "not found")
-      result -> send_body_resp(conn, 200, result)
+      return -> send_body_resp(conn, 200, return)
     end
   end
 end
