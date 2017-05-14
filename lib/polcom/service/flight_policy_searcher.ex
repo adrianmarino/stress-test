@@ -4,7 +4,9 @@ alias Polcom.Metadata
 
 defmodule Polcom.FlightPolicySearcher do
   def find(flight, payment_type, metadata) do
-    PolcomRepo.find_by(build_criterion(flight, payment_type, metadata))
+    policies = PolcomRepo.find_by(build_criterion(flight, payment_type, metadata))
+    IO.puts("...found #{Enum.count(policies)} policies.")
+    policies
   end
 
   defp build_criterion(flight, payment_type, metadata) do

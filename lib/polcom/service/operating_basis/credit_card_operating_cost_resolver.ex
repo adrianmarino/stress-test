@@ -8,7 +8,6 @@ defmodule Polcom.CreditCardOperatingCostResolver do
   def find_test_print, do: IO.puts(Core.JSON.to_pretty_json(find_test()))
   def find_test_profiler, do: Core.Profiler.time(find_test())
   def find_test_time, do: to_string(find_test_profiler())
-  def find_test_count, do: find_test_count()
 
   def find_test do
     find(
@@ -20,6 +19,9 @@ defmodule Polcom.CreditCardOperatingCostResolver do
 
   def find(flight: flight, metadata: metadata) do
     policies = FlightPolicySearcher.find(flight, "CREDIT_CARD", metadata)
-    PolicyToCreditCardOperatinfCostConverter.convert(policies, flight.airline)
+
+    result = PolicyToCreditCardOperatinfCostConverter.convert(policies, flight.airline)
+    IO.puts("...generated #{Enum.count(result)} credit card operating costs.")
+    result
   end
 end
