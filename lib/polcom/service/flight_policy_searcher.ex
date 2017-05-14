@@ -1,6 +1,4 @@
 alias Polcom.PolcomRepo
-alias Polcom.Flight
-alias Polcom.Metadata
 
 defmodule Polcom.FlightPolicySearcher do
   def find(flight, payment_type, metadata) do
