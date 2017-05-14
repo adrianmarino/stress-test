@@ -13,7 +13,7 @@ config :polcom, Polcom.Endpoint,
   check_origin: false,
   watchers: []
 
-config :polcom, :mongo,
+config :polcom, :polcom,
     hostname: "mongo01st.almundo.it",
     post: "27017",
     database: "polcom",
@@ -22,6 +22,12 @@ config :polcom, :mongo,
     timeout: 300_000,
     pool_timeout: 300_000
 
+config :polcom, :fop,
+    hostname: "mongo01st.almundo.it",
+    post: "27017",
+    database: "fop",
+    timeout: 300_000,
+    pool_timeout: 300_000
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

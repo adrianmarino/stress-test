@@ -1,4 +1,4 @@
-import Polcom.Repo.Config
+import Core.Repo.Config
 
 defmodule Polcom do
   use Application
@@ -14,13 +14,19 @@ defmodule Polcom do
       supervisor(Polcom.Endpoint, []),
       # Start your own worker by calling: Polcom.Worker.start_link(arg1, arg2, arg3)
       # worker(Polcom.Worker, [arg1, arg2, arg3]),
-      worker(Mongo, [[name: :mongo, pool: DBConnection.Poolboy] ++ config()])
+      worker(Mongo, [[name: :polcom, pool: DBConnection.Poolboy] ++ config(:polcom)], id: :polcom),
+      worker(Mongo, [[name: :fop, pool: DBConnection.Poolboy] ++ config(:fop)], id: :fop)
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Polcom.Supervisor]
-    Supervisor.start_link(children, opts)
+    result = Supervisor.start_link(children, opts)
+
+    Polcom.OperatingBasisRepo.init()
+    Polcom.PolcomRepo.init()
+
+    result
   end
 
   # Tell Phoenix to update the endpoint configuration
