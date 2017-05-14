@@ -1,7 +1,7 @@
 alias Polcom.Policy
 alias Polcom.Policy.Modifiers
 import Polcom.AssociationResolver, only: [operating_basis: 1]
-import Enum, only: [map: 2, filter: 2, empty?: 1]
+import Enum, only: [map: 2, filter: 2, empty?: 1, sort: 2]
 import List, only: [flatten: 1]
 import String, only: [to_integer: 1]
 
@@ -10,6 +10,8 @@ defmodule Polcom.PolicyToCreditCardOperatinfCostConverter do
       |> map(&(to_destiny(operating_basis(&1), &1, airline)))
       |> flatten
       |> filter(&(not empty?(&1)))
+      |> MapSet.new
+      |> sort(&(&1.percent >= &2.percent))
 
     defp to_destiny(basis, policy, airline) do
       modifiers = Policy.modifiers(policy)
