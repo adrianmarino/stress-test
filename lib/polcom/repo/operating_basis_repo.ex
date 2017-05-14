@@ -1,6 +1,5 @@
 alias Core.MongoStoreFactory
 alias Core.Store
-import Enum, only: [filter: 2]
 
 defmodule Polcom.OperatingBasisRepo do
   def init do
@@ -12,5 +11,5 @@ defmodule Polcom.OperatingBasisRepo do
     )
   end
 
-  def find_by(criterion), do: Store.get(__MODULE__) |> filter(criterion)
+  def all(), do: Store.get(__MODULE__)
 end

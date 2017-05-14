@@ -1,3 +1,7 @@
+alias Polcom.OperatingBasisRepo
+alias Polcom.OperatingBasisCache
+alias Polcom.PolcomRepo
+
 import Core.Repo.Config
 
 defmodule Polcom do
@@ -23,9 +27,7 @@ defmodule Polcom do
     opts = [strategy: :one_for_one, name: Polcom.Supervisor]
     result = Supervisor.start_link(children, opts)
 
-    Polcom.OperatingBasisRepo.init()
-    Polcom.PolcomRepo.init()
-
+    initialize_in_memory_stores()
     result
   end
 
@@ -34,5 +36,14 @@ defmodule Polcom do
   def config_change(changed, _new, removed) do
     Polcom.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp initialize_in_memory_stores do
+    OperatingBasisRepo.init()
+
+    basis = OperatingBasisRepo.all()
+    OperatingBasisCache.create(basis)
+
+    PolcomRepo.init()
   end
 end

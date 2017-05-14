@@ -2,25 +2,13 @@ alias Polcom.PolcomRepo
 alias Polcom.Flight
 alias Polcom.Metadata
 
-defmodule Polcom.FlightOperatingCostService do
-  def find_test_count, do: Enum.count(find_test())
-
-  def find_test do
-    find(
-      Flight.create(
-        airline: "AR",
-        origin: "EZE",
-        destination: "MAD",
-        departure: "2016-11-16",
-        returning: "2016-11-23"
-      ),
-      "CREDIT_CARD",
-      Metadata.create(site: "ARG", brand: "ALMUNDO", channel: "WEB")
-    )
+defmodule Polcom.FlightPolicySearcher do
+  def find(flight, payment_type, metadata) do
+    PolcomRepo.find_by(build_criterion(flight, payment_type, metadata))
   end
 
-  def find(flight, payment_type, metadata) do
-    PolcomRepo.find_by(fn policy ->
+  defp build_criterion(flight, payment_type, metadata) do
+    fn policy ->
       Polcom.ProductTypeMatcher.match?("FLIGHT", policy)
       and Polcom.ItemMatcher.match?("FARE", policy)
       and Polcom.PaymentTypeMatcher.match?(payment_type, policy)
@@ -29,6 +17,6 @@ defmodule Polcom.FlightOperatingCostService do
       and Polcom.RouteOriginMatcher.match?(flight.origin, policy)
       and Polcom.RouteDestinationMatcher.match?(flight.destination, policy)
       and Polcom.PeriodMatcher.match?(flight.departure, flight.returning, policy)
-    end)
+    end
   end
 end
