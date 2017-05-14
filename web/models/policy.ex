@@ -68,5 +68,11 @@ defmodule Polcom.Policy do
         id -> to_string(id)
       end
     end
+    def installments(modifiers) do
+      case modifiers["installments"] do
+        nil -> []
+        list -> list
+      end
+    end
   end
 end

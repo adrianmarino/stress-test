@@ -16,13 +16,13 @@ defmodule Polcom.PolicyToCreditCardOperatinfCostConverter do
       bank_id = Modifiers.financial_entity_id(modifiers)
       credit_card_id = Modifiers.credit_card_id(modifiers)
 
-      Map.keys(basis) |> Enum.map(fn(installments)->
+      Modifiers.installments(modifiers) |> Enum.map(fn(it)->
         %{
           airline: airline,
           credit_card_id: credit_card_id,
           financial_entity_id: bank_id,
-          installments: installments,
-          percent: basis[installments]
+          installments: it,
+          percent: basis[it]
         }
       end)
     end
