@@ -8,9 +8,9 @@ defmodule Polcom.PolicyToCreditCardOperatinfCostConverter do
     def convert(policies, airline), do: policies
       |> map(&(to_destiny(operating_basis(&1), &1, airline)))
       |> flatten
-      |> filter(&(!empty?(&1)))
+      |> filter(&(not empty?(&1)))
 
-    defp to_destiny(%{}, _, _), do: %{}
+    defp to_destiny(basis, _, _) when basis == %{}, do: %{}
     defp to_destiny(basis, policy, airline) do
       modifiers = Policy.modifiers(policy)
       bank_id = Modifiers.financial_entity_id(modifiers)
