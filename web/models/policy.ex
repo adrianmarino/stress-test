@@ -56,23 +56,8 @@ defmodule Polcom.Policy do
   defmodule Modifiers do
     def payment_type(modifiers), do: modifiers["payment_type"]
     def operating_basis_id(modifiers), do: to_string(modifiers["operating_basis_id"])
-    def credit_card_id(modifiers) do
-      case modifiers["credit_card_id"] do
-        nil -> ""
-        id -> to_string(id)
-      end
-    end
-    def financial_entity_id(modifiers) do
-      case modifiers["financial_entity_id"] do
-        nil -> ""
-        id -> to_string(id)
-      end
-    end
-    def installments(modifiers) do
-      case modifiers["installments"] do
-        nil -> []
-        list -> list
-      end
-    end
+    def credit_card_id(modifiers), do: to_string(Map.get(modifiers, "credit_card_id", ""))
+    def financial_entity_id(modifiers), do: to_string(Map.get(modifiers, "financial_entity_id", ""))
+    def installments(modifiers), do: Map.get(modifiers, "installments", [])
   end
 end
