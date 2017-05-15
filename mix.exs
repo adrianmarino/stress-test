@@ -9,7 +9,6 @@ defmodule Polcom.Mixfile do
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     aliases: aliases(),
      deps: deps()]
   end
 
@@ -21,7 +20,8 @@ defmodule Polcom.Mixfile do
         mod: {Polcom, []},
         applications: [
           :phoenix, :phoenix_pubsub, :cowboy, :logger, :gettext, :phoenix_ecto,
-          :mongodb, :poolboy, :logger_file_backend, :uuid, :httpoison]
+          :mongodb, :poolboy, :logger_file_backend, :uuid, :httpoison
+        ]
     ]
   end
 
@@ -42,25 +42,13 @@ defmodule Polcom.Mixfile do
       {:cowboy, "~> 1.0"},
       {:mongodb, ">= 0.0.0"},
       {:poolboy, ">= 0.0.0"},
-      {:phoenix_ecto, "~> 3.0"},
       {:httpoison, "~> 0.9.0"},
       {:uuid, "~> 1.1"},
       {:logger_file_backend, "0.0.8"},
       {:exrm, "~> 1.0.8"},
       {:timex, "~> 3.0"},
-      {:exjsx, "~> 4.0.0", git: "https://github.com/talentdeficit/exjsx"}
+      {:exjsx, "~> 4.0.0", git: "https://github.com/talentdeficit/exjsx"},
+      {:phoenix_live_reload, "~> 1.0", only: :dev}
     ]
-  end
-
-  # Aliases are shortcuts or tasks specific to the current project.
-  # For example, to create, migrate and run the seeds file at once:
-  #
-  #     $ mix ecto.setup
-  #
-  # See the documentation for `Mix` for more info on aliases.
-  defp aliases do
-    ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-     "ecto.reset": ["ecto.drop", "ecto.setup"],
-     "test": ["ecto.create --quiet", "ecto.migrate", "test"]]
   end
 end

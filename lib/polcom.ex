@@ -27,7 +27,7 @@ defmodule Polcom do
     opts = [strategy: :one_for_one, name: Polcom.Supervisor]
     result = Supervisor.start_link(children, opts)
 
-    initialize_in_memory_stores()
+    spawn fn-> initialize_in_memory_stores() end
     result
   end
 
