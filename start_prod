@@ -1,0 +1,4 @@
+#!/bin/bash
+export MIX_ENV=prod
+mix compile.protocols
+elixir -pa _build/prod/consolidated -S mix phoenix.server
