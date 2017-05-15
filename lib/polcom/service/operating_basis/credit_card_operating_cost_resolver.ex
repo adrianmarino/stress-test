@@ -1,5 +1,4 @@
-alias Polcom.FlightPolicySearcher
-alias Polcom.PolicyToCreditCardOperatinfCostConverter
+alias Polcom.{FlightPolicySearcher, PolicyToCreditCardOperatinfCostConverter}
 
 defmodule Polcom.CreditCardOperatingCostResolver do
   import Logger

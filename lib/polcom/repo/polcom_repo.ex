@@ -1,5 +1,4 @@
-alias Core.MongoStoreFactory
-alias Core.Store
+alias Core.{MongoStoreFactory, Store}
 import Enum, only: [filter: 2]
 
 defmodule Polcom.PolcomRepo do

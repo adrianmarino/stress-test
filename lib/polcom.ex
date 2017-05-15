@@ -1,6 +1,4 @@
-alias Polcom.OperatingBasisRepo
-alias Polcom.OperatingBasisCache
-alias Polcom.PolcomRepo
+alias Polcom.{OperatingBasisRepo, OperatingBasisCache, PolcomRepo}
 
 import Core.Repo.Config
 

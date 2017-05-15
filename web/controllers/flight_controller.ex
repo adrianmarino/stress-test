@@ -1,8 +1,5 @@
-alias Polcom.Flight
-alias Polcom.Metadata
-alias Polcom.CreditCardOperatingCostResolver
-alias Core.Profiler
-alias Core.Result
+alias Polcom.{Flight, Metadata, CreditCardOperatingCostResolver}
+alias Core.{Profiler, Result}
 
 defmodule Polcom.FlightController do
   use Polcom.Web, :controller
@@ -10,7 +7,8 @@ defmodule Polcom.FlightController do
 
   def find(conn, params), do: response(conn, find_from(params))
 
-  defp response(conn, %Result{return: return}) when return == [], do: send_error_resp(conn, 400, "not found")
+  defp response(conn, %Result{return: return}) when return == [],
+    do: send_error_resp(conn, 400, "not found")
   defp response(conn, %Result{} = result) do
     # IO.puts("...process time: #{result.time}")
     send_body_resp(conn, 200, result.return)
@@ -23,8 +21,9 @@ defmodule Polcom.FlightController do
   end
 
   defp flight(params) do
-    Flight.create(airline: params["airlines"], origin: params["origin"], destination: params["destination"],
-                  departure: params["departure"], returning: params["returning"])
+    Flight.create(airline: params["airlines"],
+      origin: params["origin"], destination: params["destination"],
+      departure: params["departure"], returning: params["returning"])
   end
 
   defp metadata(params) do

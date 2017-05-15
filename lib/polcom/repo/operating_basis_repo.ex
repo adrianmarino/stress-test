@@ -1,5 +1,4 @@
-alias Core.MongoStoreFactory
-alias Core.Store
+alias Core.{MongoStoreFactory, Store}
 
 defmodule Polcom.OperatingBasisRepo do
   def init do

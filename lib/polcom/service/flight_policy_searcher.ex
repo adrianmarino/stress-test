@@ -1,4 +1,5 @@
-alias Polcom.PolcomRepo
+alias Polcom.{PolcomRepo, ProductTypeMatcher, ItemMatcher, PaymentTypeMatcher, MetadataMatcher}
+alias Polcom.{AirlineMatcher, RouteOriginMatcher, RouteDestinationMatcher, PeriodMatcher}
 
 defmodule Polcom.FlightPolicySearcher do
   import Logger
@@ -11,14 +12,14 @@ defmodule Polcom.FlightPolicySearcher do
 
   defp build_criterion(flight, payment_type, metadata) do
     fn policy ->
-      Polcom.ProductTypeMatcher.match?("FLIGHT", policy)
-      and Polcom.ItemMatcher.match?("FARE", policy)
-      and Polcom.PaymentTypeMatcher.match?(payment_type, policy)
-      and Polcom.MetadataMatcher.match?(metadata, policy)
-      and Polcom.AirlineMatcher.match?(flight.airline, policy)
-      and Polcom.RouteOriginMatcher.match?(flight.origin, policy)
-      and Polcom.RouteDestinationMatcher.match?(flight.destination, policy)
-      and Polcom.PeriodMatcher.match?(flight.departure, flight.returning, policy)
+      ProductTypeMatcher.match?("FLIGHT", policy)
+      and ItemMatcher.match?("FARE", policy)
+      and PaymentTypeMatcher.match?(payment_type, policy)
+      and MetadataMatcher.match?(metadata, policy)
+      and AirlineMatcher.match?(flight.airline, policy)
+      and RouteOriginMatcher.match?(flight.origin, policy)
+      and RouteDestinationMatcher.match?(flight.destination, policy)
+      and PeriodMatcher.match?(flight.departure, flight.returning, policy)
     end
   end
 end
