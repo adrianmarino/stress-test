@@ -20,7 +20,8 @@ defmodule Polcom.Mixfile do
         mod: {Polcom, []},
         applications: [
           :phoenix, :phoenix_pubsub, :cowboy, :logger, :gettext, :phoenix_ecto,
-          :mongodb, :poolboy, :logger_file_backend, :uuid, :httpoison
+          :mongodb, :poolboy, :logger_file_backend, :uuid, :httpoison,
+          :timex, :exjsx
         ]
     ]
   end
@@ -37,7 +38,6 @@ defmodule Polcom.Mixfile do
       {:phoenix, "~> 1.2.1"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.0"},
-      {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:mongodb, ">= 0.0.0"},
@@ -48,7 +48,8 @@ defmodule Polcom.Mixfile do
       {:exrm, "~> 1.0.8"},
       {:timex, "~> 3.0"},
       {:exjsx, "~> 4.0.0", git: "https://github.com/talentdeficit/exjsx"},
-      {:phoenix_live_reload, "~> 1.0", only: :dev}
+      {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:exrm, "~> 1.0"}
     ]
   end
 end

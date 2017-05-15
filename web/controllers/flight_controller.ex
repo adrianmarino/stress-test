@@ -12,7 +12,7 @@ defmodule Polcom.FlightController do
 
   defp response(conn, %Result{return: return}) when return == [], do: send_error_resp(conn, 400, "not found")
   defp response(conn, %Result{} = result) do
-    IO.puts("...process time: #{result.time}")
+    # IO.puts("...process time: #{result.time}")
     send_body_resp(conn, 200, result.return)
   end
 
