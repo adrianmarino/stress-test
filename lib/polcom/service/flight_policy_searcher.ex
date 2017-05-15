@@ -1,5 +1,5 @@
 alias Polcom.{PolcomRepo, ProductTypeMatcher, ItemMatcher, PaymentTypeMatcher, MetadataMatcher}
-alias Polcom.{AirlineMatcher, RouteOriginMatcher, RouteDestinationMatcher, PeriodMatcher}
+alias Polcom.{AirlinesMatcher, RouteOriginMatcher, RouteDestinationMatcher, PeriodMatcher}
 
 defmodule Polcom.FlightPolicySearcher do
   import Logger
@@ -16,7 +16,7 @@ defmodule Polcom.FlightPolicySearcher do
       and ItemMatcher.match?("FARE", policy)
       and PaymentTypeMatcher.match?(payment_type, policy)
       and MetadataMatcher.match?(metadata, policy)
-      and AirlineMatcher.match?(flight.airline, policy)
+      and AirlinesMatcher.match?(flight.airlines, policy)
       and RouteOriginMatcher.match?(flight.origin, policy)
       and RouteDestinationMatcher.match?(flight.destination, policy)
       and PeriodMatcher.match?(flight.departure, flight.returning, policy)
