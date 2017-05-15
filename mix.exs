@@ -21,7 +21,7 @@ defmodule Polcom.Mixfile do
         applications: [
           :phoenix, :phoenix_pubsub, :cowboy, :logger, :gettext, :phoenix_ecto,
           :mongodb, :poolboy, :logger_file_backend, :uuid, :httpoison,
-          :timex, :exjsx
+          :timex, :exjsx, :parallel_stream
         ]
     ]
   end
@@ -49,7 +49,8 @@ defmodule Polcom.Mixfile do
       {:timex, "~> 3.0"},
       {:exjsx, "~> 4.0.0", git: "https://github.com/talentdeficit/exjsx"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:exrm, "~> 1.0"}
+      {:exrm, "~> 1.0"},
+      {:parallel_stream, "~> 1.0.5"}
     ]
   end
 end

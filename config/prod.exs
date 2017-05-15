@@ -13,7 +13,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :polcom, Polcom.Endpoint,
     server: true,
-    http: [port: 4000,
+    http: [port: 8080,
       protocol_options: [max_keepalive: 5_000_000]
     ]
 

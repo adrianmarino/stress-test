@@ -16,12 +16,15 @@ defmodule Polcom.FlightController do
 
   defp find_from(params) do
     Profiler.time(fn->
-      CreditCardOperatingCostResolver.find(flight: flight(params), metadata: metadata(params))
+      airlines(params)
+        |> ParallelStream.map(fn airline-> CreditCardOperatingCostResolver.find(flight: flight(params, airline), metadata: metadata(params)) end)
+        |> Enum.into([])
+        |> List.flatten
     end)
   end
 
-  defp flight(params) do
-    Flight.create(airline: params["airlines"],
+  defp flight(params, airline) do
+    Flight.create(airline: airline,
       origin: params["origin"], destination: params["destination"],
       departure: params["departure"], returning: params["returning"])
   end
@@ -29,4 +32,6 @@ defmodule Polcom.FlightController do
   defp metadata(params) do
     Metadata.create(site: params["site"], brand: params["brand"], channel: params["channel"])
   end
+
+  defp airlines(params), do: String.split(params["airlines"], ",")
 end
