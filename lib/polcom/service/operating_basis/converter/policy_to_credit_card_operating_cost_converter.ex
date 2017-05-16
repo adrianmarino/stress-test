@@ -2,15 +2,14 @@ alias Polcom.Policy
 alias Polcom.Policy.Modifiers
 alias Polcom.Policy.Rules
 import Polcom.AssociationResolver, only: [operating_basis: 1]
-import Enum, only: [map: 2, reject: 2, empty?: 1, sort: 2]
+import Enum, only: [map: 2, sort: 2]
 import List, only: [flatten: 1]
 import String, only: [to_integer: 1]
 
-defmodule Polcom.PolicyToCreditCardOperatinfCostConverter do
+defmodule Polcom.PolicyToCreditCardOperatingfCostConverter do
     def convert(policies), do: policies
       |> map(&(to_destiny(operating_basis(&1), &1)))
       |> flatten
-      |> reject(&empty?/1)
       |> MapSet.new
       |> sort(&(&1.percent >= &2.percent))
 
@@ -33,7 +32,6 @@ defmodule Polcom.PolicyToCreditCardOperatinfCostConverter do
                   }
                end)
           end)
-      |> flatten
     end
 
     defp fetch_installments(basis, value), do: Map.get(basis, to_integer(value), 1)
