@@ -5,7 +5,7 @@ defmodule Polcom.Router do
     plug :accepts, ["json"]
   end
 
-  scope "abs/fops", Polcom do
+  scope "/abs/fops", Polcom do
     pipe_through :api
     get "/flights/credit-cards/operating-costs", FlightController, :find
   end
