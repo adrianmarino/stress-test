@@ -2,7 +2,7 @@ alias Polcom.{Policy, Policy.Modifiers, Policy.Rules}
 import Polcom.AssociationResolver, only: [operating_basis: 1]
 import Enum, only: [map: 2, sort: 2]
 import List, only: [flatten: 1]
-import String, only: [to_integer: 1]
+import String, only: [to_integer: 1, to_float: 1]
 
 defmodule Polcom.PolicyToCreditCardOperatingfCostConverter do
     def convert(policies), do: policies
@@ -15,8 +15,8 @@ defmodule Polcom.PolicyToCreditCardOperatingfCostConverter do
       modifiers = Policy.modifiers(policy)
       rules = Policy.rules(policy)
 
-      bank_id = Modifiers.financial_entity_id(modifiers)
-      credit_card_id = Modifiers.credit_card_id(modifiers)
+      financial_entity_id = to_integer(Modifiers.financial_entity_id(modifiers))
+      credit_card_id = to_integer(Modifiers.credit_card_id(modifiers))
       airlines = Rules.airlines(rules)
 
       Modifiers.installments(modifiers)
@@ -24,9 +24,9 @@ defmodule Polcom.PolicyToCreditCardOperatingfCostConverter do
                   %{
                     airline: airline,
                     credit_card_id: credit_card_id,
-                    financial_entity_id: bank_id,
-                    installments: installments,
-                    percent: fetch_installments(basis, installments)
+                    financial_entity_id: financial_entity_id,
+                    installments: to_integer(installments),
+                    percent: to_float(fetch_installments(basis, installments))
                   }
                end)
           end)
