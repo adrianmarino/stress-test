@@ -5,13 +5,13 @@ defmodule Polcom.AirlinesMatcher do
   def match?(airlines, policy) do
     case airlines do
       nil -> true
-      [] -> true
-      _ ->
+      []  -> true
+      _   ->
         case Policy.rules(policy) do
-          nil -> false
+          nil   -> false
           rules ->
             case Rules.airlines(rules) do
-              [] -> true
+              []   -> true
               list -> Enum.any?(airlines, &(Enum.member?(list, &1)))
             end
         end

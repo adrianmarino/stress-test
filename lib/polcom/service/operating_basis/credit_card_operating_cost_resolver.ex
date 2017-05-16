@@ -6,7 +6,7 @@ defmodule Polcom.CreditCardOperatingCostResolver do
   def find(flight: flight, metadata: metadata) do
     policies = FlightPolicySearcher.find(flight, "CREDIT_CARD", metadata)
 
-    result = PolicyToCreditCardOperatinfCostConverter.convert(policies, flight.airline)
+    result = PolicyToCreditCardOperatinfCostConverter.convert(policies)
     debug("...generated #{Enum.count(result)} credit card operating costs.")
     result
   end
