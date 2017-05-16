@@ -1,6 +1,4 @@
-alias Polcom.Policy
-alias Polcom.Policy.Modifiers
-alias Polcom.Policy.Rules
+alias Polcom.{Policy, Policy.Modifiers, Policy.Rules}
 import Polcom.AssociationResolver, only: [operating_basis: 1]
 import Enum, only: [map: 2, sort: 2]
 import List, only: [flatten: 1]

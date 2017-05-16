@@ -1,17 +1,15 @@
-alias Polcom.Policy
-alias Polcom.Policy.Rules
+alias Polcom.{Policy, Policy.Rules}
 import Enum, only: [any?: 2]
 
 defmodule Polcom.PeriodMatcher do
+  def match?(nil, _, _), do: true
+  def match?("", _, _), do: true
+  def match?(_, nil, _), do: true
+  def match?(_, "", _), do: true
   def match?(from, to, policy) do
-    case from do
-      nil -> true
-      "" -> true
-      _ ->
-        case Policy.rules(policy) do
-          nil -> false
-          rules -> Rules.periods(rules) |> any?(&(between?(&1, from, to)))
-        end
+    case Policy.rules(policy) do
+      nil -> false
+      rules -> Rules.periods(rules) |> any?(&(between?(&1, from, to)))
     end
   end
 

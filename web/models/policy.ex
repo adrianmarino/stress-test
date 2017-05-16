@@ -1,61 +1,33 @@
+import List, only: [wrap: 1]
+import Polcom.FieldUtil
+
 defmodule Polcom.Policy do
   def expire_date(policy), do: policy["expire_date"]
 
-  def brands(policy) do
-    case policy["brands"] do
-      nil -> []
-      list -> list
-    end
-  end
   def site(policy), do: policy["site"]
-  def channels(policy) do
-    case policy["channels"] do
-      nil -> []
-      list -> list
-    end
-  end
+  def brands(policy), do: wrap(policy["brands"])
+  def channels(policy), do: wrap(policy["channels"])
+
   def rules(policy), do:  policy["rules"]
   def modifiers(policy), do:  policy["modifiers"]
 
-  defmodule Field do
-    def list(rules, name) do
-      case rules[name] do
-        nil -> []
-        fields ->
-          case List.first(fields) do
-            nil -> []
-            fields ->
-              case fields["values"] do
-                nil -> []
-                values -> values
-              end
-          end
-      end
-    end
-  end
-
   defmodule Rules do
-    def product_types(rules), do: Field.list(rules, "product_type")
-    def item_types(rules), do: Field.list(rules, "item_type")
-    def airlines(rules), do: Field.list(rules, "airline_code")
-    def route_origins(rules), do: Field.list(rules, "route_origin")
-    def route_destinations(rules), do: Field.list(rules, "route_destination")
-    def periods(rules), do: Enum.zip(departure_dates(rules), returning_dates(rules))
+    def product_types(rules), do: list_field(rules, "product_type")
+    def item_types(rules), do: list_field(rules, "item_type")
 
-    defp departure_dates(rules), do: dates(Field.list(rules, "departure_date"), "0000")
-    defp returning_dates(rules), do: dates(Field.list(rules, "returning_date"), "9999")
-    defp dates(value, if_none) do
-      case value do
-        nil -> [if_none]
-        [] -> [if_none]
-        _ -> String.split(List.first(value), "|")
-      end
-    end
+    def airlines(rules), do: list_field(rules, "airline_code")
+    def route_origins(rules), do: list_field(rules, "route_origin")
+    def route_destinations(rules), do: list_field(rules, "route_destination")
+
+    def departure_dates(rules), do: dates_field(list_field(rules, "departure_date"), "0000")
+    def returning_dates(rules), do: dates_field(list_field(rules, "returning_date"), "9999")
+    def periods(rules), do: Enum.zip(departure_dates(rules), returning_dates(rules))
   end
 
   defmodule Modifiers do
     def payment_type(modifiers), do: modifiers["payment_type"]
     def operating_basis_id(modifiers), do: to_string(modifiers["operating_basis_id"])
+
     def credit_card_id(modifiers), do: to_string(Map.get(modifiers, "credit_card_id", ""))
     def financial_entity_id(modifiers), do: to_string(Map.get(modifiers, "financial_entity_id", ""))
     def installments(modifiers), do: Map.get(modifiers, "installments", [])

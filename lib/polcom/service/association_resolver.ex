@@ -1,5 +1,4 @@
-alias Polcom.{Policy, OperatingBasisCache}
-alias Polcom.Policy.Modifiers
+alias Polcom.{Policy, OperatingBasisCache, Policy.Modifiers}
 
 defmodule Polcom.AssociationResolver do
   def operating_basis(policy), do: OperatingBasisCache.get(basis_id_from(policy))
