@@ -1,4 +1,4 @@
-alias Core.Store
+alias Core.{Store, StringUtil}
 
 defmodule Polcom.OperatingBasisCache do
   def create(list) do
@@ -7,7 +7,9 @@ defmodule Polcom.OperatingBasisCache do
       list |> Enum.map(fn basis ->
         {
             BSON.ObjectId.encode!(basis["_id"]),
-            basis["percents"] |> Enum.map(&({&1["installments"], &1["percent"]})) |> Enum.into(%{})
+            basis["percents"]
+              |> Enum.map(&({Integer.to_string(&1["installments"]), to_percent(&1["percent"])}))
+              |> Enum.into(%{})
         }
       end)  |> Enum.into(%{})
     )
@@ -23,4 +25,8 @@ defmodule Polcom.OperatingBasisCache do
   def ids(), do: Map.keys(all())
 
   def all, do: Store.get(__MODULE__)
+
+  defp to_percent(value) when is_bitstring(value), do: StringUtil.to_number(value)
+  defp to_percent(value) when is_integer(value), do: value
+  defp to_percent(value), do: String.to_float(value)
 end

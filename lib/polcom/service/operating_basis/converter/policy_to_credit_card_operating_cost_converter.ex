@@ -2,7 +2,7 @@ alias Polcom.{Policy, Policy.Modifiers, Policy.Rules}
 import Polcom.AssociationResolver, only: [operating_basis: 1]
 import Enum, only: [map: 2, sort: 2]
 import List, only: [flatten: 1]
-import String, only: [to_integer: 1, to_float: 1]
+import String, only: [to_integer: 1]
 
 defmodule Polcom.PolicyToCreditCardOperatingfCostConverter do
     def convert(policies), do: policies
@@ -26,18 +26,14 @@ defmodule Polcom.PolicyToCreditCardOperatingfCostConverter do
                     credit_card_id: credit_card_id,
                     financial_entity_id: financial_entity_id,
                     installments: to_integer(installments),
-                    percent: to_percent(fetch_installments(basis, installments))
+                    percent: fetch_installments(basis, installments)
                   }
                end)
           end)
     end
 
-    defp fetch_installments(basis, value), do: Map.get(basis, to_integer(value), 1)
+    defp fetch_installments(basis, value), do: Map.get(basis, value, 1)
 
     defp to_int_or_nil(""), do: nil
     defp to_int_or_nil(value), do: to_integer(value)
-
-    defp to_percent(value) when is_bitstring(value), do: Core.StringUtil.to_number(value)
-    defp to_percent(value) when is_integer(value), do: value
-    defp to_percent(value), do: to_float(value)
 end
