@@ -22,7 +22,7 @@ defmodule Polcom.PolicyToCreditCardOperatingfCostConverter do
       Modifiers.installments(modifiers)
         |> map(fn(installments)-> airlines |> map(fn airline->
                   %{
-                    airlines: airline,
+                    airline: airline,
                     credit_card_id: credit_card_id,
                     financial_entity_id: bank_id,
                     installments: installments,
