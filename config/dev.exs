@@ -14,18 +14,18 @@ config :polcom, Polcom.Endpoint,
   watchers: []
 
 config :polcom, :polcom,
-    hostname: "mongo01st.almundo.it",
-    post: "27017",
-    database: "polcom",
-    username: "polcom",
-    password: "Almundo2015",
+    hostname: "xxxxxx",
+    post: "xxxxxx",
+    database: "xxxxxx",
+    username: "xxxxxx",
+    password: "xxxxxx",
     timeout: 300_000,
     pool_timeout: 300_000
 
 config :polcom, :fop,
-    hostname: "mongo01st.almundo.it",
-    post: "27017",
-    database: "fop",
+    hostname: "xxxxxx",
+    post: "xxxxxx",
+    database: "xxxxxx",
     timeout: 300_000,
     pool_timeout: 300_000
 
