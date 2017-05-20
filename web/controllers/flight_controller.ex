@@ -12,7 +12,7 @@ defmodule Polcom.FlightController do
     do: send_error_resp(conn, 400, "not found")
   defp response(conn, %Result{} = result) do
     Logger.debug("...process time: #{result.time}")
-    send_body_resp(conn, 200, result.return)
+    send_resp(conn, 200, Poison.encode!(result.return))
   end
 
   defp find_from(params) do
